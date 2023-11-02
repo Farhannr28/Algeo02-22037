@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express();
+const multer = require('multer')
 app.use(express.static('public'))
+const upload = multer({ dest: 'uploads/'})
 //routes
 // app.get('/',(req, res)=>{
 //     const {key} = req.query
@@ -8,7 +10,8 @@ app.use(express.static('public'))
 //     res.status(200).json({info: 'preset text'})
 // })
 
-app.post('/', (req,res)=>{
+app.post('/', upload.single('parcel'),(req,res)=>{
+
     res.status(200).send({status: 'received'})
 })
 app.listen(5001,()=>{
