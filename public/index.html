@@ -6,8 +6,27 @@
     <title>Document</title>
 </head>
 <body>
-    <form action = "/" method="post">
-        <input type="file" id = "input" accept="image/png, image/jpg" />    
+    <form>
+        <input type="file" id = "input" accept="image/png, image/jpg" /> 
+        <button  id ="submit">Unggah gambar</button>  
     </form>
+    <script>
+        const postBtn = document.getElementById('submit')
+        const input = document.getElementById('input')
+        const baseUrl = 'http://localhost:5001/'
+        postBtn.addEventListener('click', postPict)
+        async function postPict(e){
+            e.preventDefault()
+            const res = await fetch(baseUrl ,
+            {
+                method:'POST',headers:{
+                    "content-Type":'application/json'
+                },
+                
+            })
+            
+
+        }
+    </script>
 </body>
 </html>

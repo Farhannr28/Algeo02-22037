@@ -1,9 +1,16 @@
 const express = require('express')
 const app = express();
+app.use(express.static('public'))
 //routes
-app.get('/',(req, res)=>{
-    res.status(200).send(`<h1>h1</h1>`)
+// app.get('/',(req, res)=>{
+//     const {key} = req.query
+//     console.log(key)
+//     res.status(200).json({info: 'preset text'})
+// })
+
+app.post('/', (req,res)=>{
+    res.status(200).send({status: 'received'})
 })
-app.listen(5000,()=>{
-    console.log("Serverr is running on http://localhost:5000")
+app.listen(5001,()=>{
+    console.log("Server is running on http://localhost:5001")
 })
