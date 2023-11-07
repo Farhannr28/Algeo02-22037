@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
+    <div>
+      <h1></h1>
+    </div>
     <form>
-        <input type="file" id = "input" accept="image/png, image/jpg" /> 
-        <button  id ="submit">Unggah gambar</button>  
+      <input type="file" id="input" accept="image/png, image/jpg" />
+      <button id="submit">Unggah gambar</button>
     </form>
     <script>
-        const postBtn = document.getElementById('submit')
-        const input = document.getElementById('input')
-        const baseUrl = 'http://localhost:5001/'
-        postBtn.addEventListener('click', postPict)
-        async function postPict(e){
-            e.preventDefault();
-            const fileInput = document.getElementById('input');
-            const formData = new FormData();
-            formData.append('parcel', fileInput.files[0]);
+      const postBtn = document.getElementById("submit");
+      const input = document.getElementById("input");
+      const baseUrl = "http://localhost:5001/";
+      postBtn.addEventListener("click", postPict);
+      async function postPict(e) {
+        e.preventDefault();
+        const fileInput = document.getElementById("input");
+        const formData = new FormData();
+        formData.append("parcel", fileInput.files[0]);
 
-            try {
-                const res = await fetch(baseUrl, {
-                    method: 'POST',
-                    body: formData
-                });
+        try {
+          const res = await fetch(baseUrl, {
+            method: "POST",
+            body: formData,
+          });
 
-                if (res.ok) {
-                    alert('File successfully uploaded!');
-                } else {
-                    alert('Error uploading file. Please try again.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred. Please try again later.');
-            }
+          if (res.ok) {
+            alert("File successfully uploaded!");
+          } else {
+            alert("Error uploading file. Please try again.");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("An error occurred. Please try again later.");
         }
+      }
     </script>
-</body>
+  </body>
 </html>
