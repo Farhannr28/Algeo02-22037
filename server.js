@@ -4,26 +4,26 @@ const multer = require('multer');
 const fs = require('fs');
 
 app.use(express.static('./public'));
-app.use('/uploads/client_image', express.static('uploads/client_image'))
-const storage = multer.diskStorage({
+const uploadClientPath = "./uploads/client_image";
+const clientStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     // Dapatkan nama subfolder dari timestamp saat ini
-    const uploadPath = "./uploads/client_image";
     // Cek apakah folder sudah ada atau belum, jika belum, buat folder baru
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
+    if (!fs.existsSync(uploadClientPath)) {
+      fs.mkdirSync(uploadClientPath, { recursive: true });
     }
-
-    cb(null, uploadPath);
+    cb(null, uploadClientPath);
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   }
 });
 
-const upload = multer({ storage });
+const clientUpload = multer({ storage:clientStorage });
 
-app.post('/', upload.array('parcel'), (req, res) => {
+app.post('/uploads/client_image', clientUpload.array('parcel'), (req, res) => {
+  const toggleValue = req.body["togg"]
+  console.log(`toggle value: ${toggleValue}`) 
   res.status(200).send({ status: 'received' });
 });
 
