@@ -11,7 +11,7 @@ const baseUrl = "http://localhost:5001/";
         document.getElementById("toggleValue").getAttribute("off")
         var formData = new FormData();
         formData.append("parcel", fileInput.files[0]);
-        formData.append("togg", toggleValue)
+        formData.append("toggle", toggleValue)
         try {
           const res = await fetch(baseUrl+"uploads/client_image", {
             method: "POST",

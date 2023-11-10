@@ -22,7 +22,7 @@ const clientStorage = multer.diskStorage({
 const clientUpload = multer({ storage:clientStorage });
 
 app.post('/uploads/client_image', clientUpload.array('parcel'), (req, res) => {
-  const toggleValue = req.body["togg"]
+  const toggleValue = req.body["toggle"]
   console.log(`toggle value: ${toggleValue}`) 
   res.status(200).send({ status: 'received' });
 });
