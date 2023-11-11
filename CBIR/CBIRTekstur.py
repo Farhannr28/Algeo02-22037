@@ -48,7 +48,7 @@ def homogeneity(matrixNorm):
     sum =0
     for i in range(len(matrixNorm)):
         for j in range(len(matrixNorm)):
-            sum+= matrixNorm[i][j]/((1+(i-j))**2)
+            sum+= matrixNorm[i][j]/(1+(i-j)**2)
 #menghitung entropy pada matrix
 def entropy(matrixNorm):
     sum =0
