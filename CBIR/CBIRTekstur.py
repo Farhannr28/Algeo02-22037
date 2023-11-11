@@ -32,20 +32,81 @@ def symmetricMatrix(matrixCo):
     res = t + matrixCo
     return res
 
-def matrixNorm(matrixSym):
+def normMatrix(matrixSym):
     sum = matrixSym.sum()
     return (matrixSym/sum)
-
+#metric texture
 #menghitung contrast pada matrix
-def contrast():
-    pass
+def contrast(matrixNorm):
+    sum =0
+    for i in range(len(matrixNorm)):
+        for j in range(len(matrixNorm)):
+            sum += matrixNorm[i][j]*(i-j)**2
+    return sum
 #menghitung homogenity pada matrix
-def homogeneity():
-    pass
+def homogeneity(matrixNorm):
+    sum =0
+    for i in range(len(matrixNorm)):
+        for j in range(len(matrixNorm)):
+            sum+= matrixNorm[i][j]/((1+(i-j))**2)
 #menghitung entropy pada matrix
-def entropy():
-    pass
+def entropy(matrixNorm):
+    sum =0
+    for i in range(len(matrixNorm)):
+        for j in range(len(matrixNorm)):
+            sum+= matrixNorm[i][j]*log2(matrixNorm[i][j])
+    return sum*(-1)
+#menghitung ketidaksamaan
+def dissimilarity(matrixNorm):
+    sum =0
+    for i in range(len(matrixNorm)):
+        for j in range(len(matrixNorm)):
+            sum+= matrixNorm[i][j]*abs(i-j)
+    return sum
+#menghitung angular second moment
+def ASM(matrixNorm):
+    sum =0
+    for i in range(len(matrixNorm)):
+        for j in range(len(matrixNorm)):
+            sum+= matrixNorm[i][j]**2
+    return sum
+#menghitung energy
+def energy(matrixNorm):
+    return sqrt(ASM(matrixNorm))
+#menghitung GLCM mean
+def mean(matrixNorm):
+    sumI =0
+    sumJ=0
+    length = len(matrixNorm)
+    for i in range(length):
+        for j in range(length):
+            sumI+= i*matrixNorm[i][j]
+            sumJ+= j*matrixNorm[i][j]
+    return sumI,sumJ
+#menghitung GLCM variance
+def var(matrixNorm):
+    sumI = 0
+    sumJ =0
+    meanI,meanJ = mean(matrixNorm)
+    length = len(matrixNorm)
+    for i in range(length):
+        for j in range(length):
+            sumI+=matrixNorm[i][j]*(i-meanI)**2
+            sumJ+=matrixNorm[i][j]*(j-meanJ)**2 
+    return sumI,sumJ
+#menghitung GLCM correlation
+def correlation(matrixNorm):
+    meanI,meanJ = mean(matrixNorm)
+    varI,varJ = var(matrixNorm)
+    sum = 0
+    for i in range(len(matrixNorm)):
+        for j in range(len(matrixNorm)):
+            sum += matrixNorm[i][j]*((i-meanI)*(j-meanJ)/(sqrt(varI*varJ)))
+    return sum
     
 #mencari tingkat kemiripan dengan cosine similarity
 def cosine_similarity(a,b):
     return np.dot(a,b)/(np.linalg(a)*np.linalg(b))
+
+
+
