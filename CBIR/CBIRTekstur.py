@@ -74,35 +74,35 @@ def ASM(matrixNorm):
 def energy(matrixNorm):
     return sqrt(ASM(matrixNorm))
 #menghitung GLCM mean
-def mean(matrixNorm):
-    sumI =0
-    sumJ=0
-    length = len(matrixNorm)
-    for i in range(length):
-        for j in range(length):
-            sumI+= i*matrixNorm[i][j]
-            sumJ+= j*matrixNorm[i][j]
-    return sumI,sumJ
-#menghitung GLCM variance
-def var(matrixNorm):
-    sumI = 0
-    sumJ =0
-    meanI,meanJ = mean(matrixNorm)
-    length = len(matrixNorm)
-    for i in range(length):
-        for j in range(length):
-            sumI+=matrixNorm[i][j]*(i-meanI)**2
-            sumJ+=matrixNorm[i][j]*(j-meanJ)**2 
-    return sumI,sumJ
-#menghitung GLCM correlation
-def correlation(matrixNorm):
-    meanI,meanJ = mean(matrixNorm)
-    varI,varJ = var(matrixNorm)
-    sum = 0
-    for i in range(len(matrixNorm)):
-        for j in range(len(matrixNorm)):
-            sum += matrixNorm[i][j]*((i-meanI)*(j-meanJ)/(sqrt(varI*varJ)))
-    return sum
+# def mean(matrixNorm):
+#     sumI =0
+#     sumJ=0
+#     length = len(matrixNorm)
+#     for i in range(length):
+#         for j in range(length):
+#             sumI+= i*matrixNorm[i][j]
+#             sumJ+= j*matrixNorm[i][j]
+#     return sumI,sumJ
+# #menghitung GLCM variance kuadrat
+# def var(matrixNorm):
+#     sumI = 0
+#     sumJ =0
+#     meanI,meanJ = mean(matrixNorm)
+#     length = len(matrixNorm)
+#     for i in range(length):
+#         for j in range(length):
+#             sumI+=matrixNorm[i][j]*(i-meanI)**2
+#             sumJ+=matrixNorm[i][j]*(j-meanJ)**2 
+#     return sumI,sumJ
+# #menghitung GLCM correlation
+# def correlation(matrixNorm):
+#     meanI,meanJ = mean(matrixNorm)
+#     varI,varJ = var(matrixNorm)
+#     sum = 0
+#     for i in range(len(matrixNorm)):
+#         for j in range(len(matrixNorm)):
+#             sum += matrixNorm[i][j]*((i-meanI)*(j-meanJ)/(sqrt(varI*varJ)))
+#     return sum
     
 #mencari tingkat kemiripan dengan cosine similarity
 def cosine_similarity(a,b):
