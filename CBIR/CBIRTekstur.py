@@ -1,8 +1,17 @@
 from math import *
 import numpy as np
+from PIL import Image
+def convertToGrayscale(rgb_image):
+    # Convert the RGB image to a NumPy array for efficient operations
+    rgb_array = np.array(rgb_image)
 
-def convertGrayscale(R, G, B):
-    return 0.29 * R + 0.587 * G + 0.114 * B
+    # Apply the luminosity formula using vectorized operations
+    brightness = np.dot(rgb_array[:, :, :3], [0.29, 0.587, 0.114])
+
+    # Convert the result to uint8
+    grayscale_image = brightness.astype(np.uint8)
+
+    return grayscale_image
 
 def cooccurenceMatrix(matrix, angle):
     res = np.zeros((256,256))
@@ -44,17 +53,19 @@ def contrast(matrixNorm):
             sum += matrixNorm[i][j]*(i-j)**2
     return sum
 #menghitung homogenity pada matrix
-def homogeneity(matrixNorm):
+def homogenity(matrixNorm):
     sum =0
     for i in range(len(matrixNorm)):
         for j in range(len(matrixNorm)):
             sum+= matrixNorm[i][j]/(1+(i-j)**2)
+    return sum
 #menghitung entropy pada matrix
 def entropy(matrixNorm):
     sum =0
     for i in range(len(matrixNorm)):
         for j in range(len(matrixNorm)):
-            sum+= matrixNorm[i][j]*log2(matrixNorm[i][j])
+            if matrixNorm[i][j]>0:
+                sum+= matrixNorm[i][j]*log2(matrixNorm[i][j])
     return sum*(-1)
 #menghitung ketidaksamaan
 def dissimilarity(matrixNorm):
