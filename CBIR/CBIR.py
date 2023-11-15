@@ -85,8 +85,9 @@ def perform_similarity_analysis(database_features, query_feature):
 if __name__ == "__main__" :
     start = time.perf_counter()
     if selected_option == "texture":
-        base_path_query  = "E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\client_image"
-        base_path_query_list = os.listdir("E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\client_image")
+        script_path_relative = os.path.dirname(os.path.abspath(__file__))
+        base_path_query  = os.path.join(script_path_relative,'..','uploads','client_image')
+        base_path_query_list = os.listdir(base_path_query)
 
         profiler = cProfile.Profile()
         profiler.enable()
@@ -94,8 +95,8 @@ if __name__ == "__main__" :
         query_features = perform_texture_analysis(base_path_query_list,base_path_query)
         
         #perform extract dataset
-        base_path_database = "E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\dataset\\"
-        database_path  = os.listdir("E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\dataset")
+        base_path_database = os.path.join(script_path_relative,'..','uploads','dataset')
+        database_path  = os.listdir(base_path_database)
         database_features = perform_texture_analysis(database_path,base_path_database)   
 
        
