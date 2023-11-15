@@ -1,6 +1,7 @@
 import React from "react";
 import "./../style/style.css";
 import { BsCardImage } from "react-icons/bs";
+import { FaCameraRetro } from "react-icons/fa";
 
 function UploadImg() {
   return (
@@ -9,6 +10,9 @@ function UploadImg() {
         <input type="file" id="input" accept="image/png, image/jpg" />
         Send Image
         <BsCardImage className="inline ml-10" />
+        <input type="file" id="input" accept="image/png, image/jpg" />
+        Send Image
+        <FaCameraRetro />
       </label>
     </div>
   );
