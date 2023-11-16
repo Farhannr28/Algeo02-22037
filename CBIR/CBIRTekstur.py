@@ -116,8 +116,3 @@ def energy(matrixNorm):
 #     return sum
     
 #mencari tingkat kemiripan dengan cosine similarity
-def cosine_similarity(a,b):
-    return np.dot(a,b)/(np.linalg.norm(a)*np.linalg.norm(b))
-
-
-
