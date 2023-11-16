@@ -16,13 +16,6 @@ numBlocks = Resize//BlockSize
 #global function
 
 # --- Color ---
-
-def block_representative_value(Hblocks, Sblocks, Vblocks):
-    avgH = np.average(Hblocks)
-    avgS = np.average(Sblocks)
-    avgV = np.average(Vblocks)
-    return [avgH, avgS, avgV]
-
 def perform_color_analysis_query(image_paths, base_path):
     try:
         repVal = np.empty((numBlocks, numBlocks), dtype=object)
@@ -164,8 +157,9 @@ def perform_similarity_analysis(database_features, query_feature):
 if __name__ == "__main__" :
     start = time.perf_counter()
     if selected_option == "texture":
-        base_path_query  = "E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\client_image"
-        base_path_query_list = os.listdir("E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\client_image")
+        script_path_relative = os.path.dirname(os.path.abspath(__file__))
+        base_path_query  = os.path.join(script_path_relative,'..','uploads','client_image')
+        base_path_query_list = os.listdir(base_path_query)
 
         profiler = cProfile.Profile()
         profiler.enable()
@@ -173,8 +167,8 @@ if __name__ == "__main__" :
         query_features = perform_texture_analysis(base_path_query_list,base_path_query)
         
         #perform extract dataset
-        base_path_database = "E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\dataset\\"
-        database_path  = os.listdir("E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\dataset")
+        base_path_database = os.path.join(script_path_relative,'..','uploads','dataset')
+        database_path  = os.listdir(base_path_database)
         database_features = perform_texture_analysis(database_path,base_path_database)   
 
         #perform search similarity
@@ -191,8 +185,9 @@ if __name__ == "__main__" :
         print(f'Finished in {round(finish-start,2)} second(s)')
         
     elif selected_option == "color":
-        base_path_query  = "E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\client_image"
-        base_path_query_list = os.listdir("E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\client_image")
+        script_path_relative = os.path.dirname(os.path.abspath(__file__))
+        base_path_query  = os.path.join(script_path_relative,'..','uploads','client_image')
+        base_path_query_list = os.listdir(base_path_query)
 
         profiler = cProfile.Profile()
         profiler.enable()
@@ -200,8 +195,8 @@ if __name__ == "__main__" :
         query_representative_blocks = perform_color_analysis_query(base_path_query_list,base_path_query) 
 
         #perform extract dataset
-        base_path_database = "E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\dataset\\"
-        database_path  = os.listdir("E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\dataset")
+        base_path_database = os.path.join(script_path_relative,'..','uploads','dataset')
+        database_path  = os.listdir(base_path_database)
         database_result = perform_color_analysis_database(database_path,base_path_database, query_representative_blocks)
         sorted_result = dict(sorted(database_result.items(), key=lambda item: item[1], reverse=True))
         result_list = list(sorted_result.items())
