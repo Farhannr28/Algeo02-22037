@@ -3,11 +3,30 @@ const app = express();
 const multer = require("multer");
 const fs = require("fs");
 
-app.get("/api", (req, res) => {
-  res.json({ users: ["userOne", "userTwo", "userThree"] });
+app.get("/saveImage", (req, res) => {
+  // Ambil URL data gambar dari parameter query
+  const imageDataUrl = req.query.imageDataUrl;
+
+  // Lakukan validasi dan konversi data URI ke buffer
+  const matches = imageDataUrl.match(/^data:(.+);base64,(.+)$/);
+  if (!matches || matches.length !== 3) {
+    return res.status(400).json({ error: "Invalid data URI" });
+  }
+
+  const imageType = matches[1];
+  const imageData = matches[2];
+  const buffer = Buffer.from(imageData, "base64");
+
+  // Tentukan path dan nama file
+  const filePath = path.join(__dirname, "client_image", "capturedImage.jpg");
+
+  // Tulis buffer ke file
+  fs.writeFileSync(filePath, buffer);
+
+  return res.json({ success: true, message: "Image saved successfully" });
 });
 
-app.use(express.static("./public"));
+app.use(express.static("./client"));
 const uploadClientPath = "./uploads/client_image";
 const clientStorage = multer.diskStorage({
   destination: (req, file, cb) => {

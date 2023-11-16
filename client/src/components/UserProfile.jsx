@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserProfile = ({ avatar_url, login, html_url }) => {
+const UserProfile = ({ avatar_url, login }) => {
   return (
     <div className="flex justify-center items-center flex-col gap-4 bg-lightGray rounded-lg py-10">
       <img

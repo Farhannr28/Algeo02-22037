@@ -1,4 +1,5 @@
 import AsideButton from "./components/AsideButton.jsx";
+import Camera from "./components/Camera.jsx";
 import ImageGallery from "./components/ImgGallery.js";
 import ImgViewer from "./components/ImgViewer.jsx";
 import Navbar from "./components/Navbar.jsx";
@@ -50,6 +51,7 @@ function App() {
         )}
       </div>
       <ImageGallery />
+      <Camera />
     </>
   );
 }
