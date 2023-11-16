@@ -10,7 +10,7 @@ function Navbar() {
       />
       <div className="">
         <span className="text-[40px] text-[#F3EEEA] py-12">
-          Reverse Image Search
+          <a href = "/">Reverse Image Search</a>
         </span>
       </div>
     </div>
