@@ -21,7 +21,7 @@ function UploadImg({onFileChange}) {
     <div className=" w-[300px] border-[#776b5d] bg-[#ebe3d5] text-[#776b5d] flex justify-center border-4 rounded-[8rem]">
       
       <label className="upload text-[34px] ">
-        <input type="file" id="inputImg" accept="image/png, image/jpg" onChange={handleFileChange} />
+        <input type="file" id="inputImg" accept=".jpg , .png" onChange={handleFileChange} />
         Send Image
         <BsCardImage className="inline ml-10" />
       </label>

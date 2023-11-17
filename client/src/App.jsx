@@ -76,8 +76,6 @@ function App() {
   const { loading, pages, totalPages, currentPage, setCurrentPage } =
     UseDataFetcher();
 
-
-
   return (
     <>
       <Navbar />

@@ -3,8 +3,6 @@ const app = express();
 const multer = require("multer");
 const fs = require("fs");
 
-
-
 app.use(express.static("./client"));
 const uploadClientPath = "./uploads/client_image";
 const uploadDatasetPath = "./uploads/dataset"
@@ -41,9 +39,11 @@ app.post("/api/submit",clientUpload.array("inputImg") ,(req, res) => {
     res.status(200).json({ message: "Files uploaded successfully!" });
     
   })
-  
   const toggleValue = req.body["toggleStatus"]
   console.log(`toggle value: ${toggleValue}`);
+  
+
+
   res.status(200).json({ message: "Files uploaded successfully!" });
 });
 

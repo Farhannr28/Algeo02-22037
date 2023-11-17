@@ -176,8 +176,9 @@ if __name__ == "__main__" :
         result_similarity = perform_similarity_analysis(database_features,query_features)
         sorted_result = dict(sorted(result_similarity.items(), key=lambda item: item[1],reverse=True))
         result_list = list(sorted_result.items())
-        for i in range(60):
-            print(result_list[i])
+        for i in (result_list):
+            if  i[1]>0.60:
+                print(i)
 
         profiler.disable()
         profiler.print_stats(sort='cumulative')
@@ -206,3 +207,4 @@ if __name__ == "__main__" :
         profiler.print_stats(sort='cumulative')
         finish = time.perf_counter()
         print(f'Finished in {round(finish-start,2)} second(s)')
+
