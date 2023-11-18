@@ -188,9 +188,8 @@ if __name__ == "__main__" :
         result_list = list(sorted_result.items())
         temp = 0
         for i in (result_list):
-            if  i[1]>3375: #60%
-                print(i)
-        profiler.disable()
-        profiler.print_stats(sort='cumulative')
-        finish = time.perf_counter()
-        print(f'Finished in {round(finish-start,2)} second(s)')
+            if  i[1]<3375: #60%
+                result_list.pop(i)
+
+        json_list = json.dumps(result_list)
+        print(json_list)
