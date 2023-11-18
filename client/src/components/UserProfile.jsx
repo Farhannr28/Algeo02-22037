@@ -1,20 +1,18 @@
 import React from "react";
 
-const UserProfile = ({ avatar_url, login, html_url }) => {
+const UserProfile = ({ pair }) => {
+  const [imagePath, similarity] = pair;
+
   return (
-    <div className="flex justify-center items-center flex-col gap-4 bg-lightGray rounded-lg py-10">
+    <div className="flex flex-col items-center gap-4 bg-lightGray rounded-lg p-4">
       <img
-        src={avatar_url}
+        src={imagePath}
         alt=""
-        className="w-[200px] p-2 border-[2px] border-solid border-purple object-cover"
+        className="w-[200px] h-[200px] border-2 border-solid border-purple rounded-lg object-cover"
       />
-      <div className="text-[1.2rem] font-bold">{login}</div>
-      {/* <a
-        href={html_url}
-        className="text-sm bg-purple p-2 text-white rounded-md"
-      >
-        View profile
-      </a> */}
+      <div className="text-lg font-semibold mt-2">
+        Similarity: {(similarity *100)}%
+      </div>
     </div>
   );
 };

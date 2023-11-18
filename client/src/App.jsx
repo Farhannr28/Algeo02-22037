@@ -6,7 +6,7 @@ import UploadImg from "./components/UploadImg";
 import UploadDataSet from "./components/UploadDataSet";
 import UseDataFetcher from "./components/UseDataFetcher";
 import UserProfile from "./components/UserProfile";
-import ImageGallery from "./components/ImgGallery";
+
 
 import Navbar from "./components/Navbar";
 import PaginationButtons from "./components/PaginationButtons";
@@ -16,6 +16,10 @@ function App() {
   const [uploadImg, setUploadImg] = useState(null)
   const [dataSet,setUploadDataSet] = useState([])
   const [toggle,setToggle] = useState("color")
+  const [loading,setLoading] = useState(false)
+  const [isFinish,setIsFinish] = useState(false)
+  const totalPages =Math.round( images.length/12)
+  const [currentPage,setCurrentPage] = useState(0)
   // useEffect(() => {
   //   fetch("/api")
   //     .then((response) => response.json())
@@ -23,6 +27,9 @@ function App() {
   //       setUploadDataSet(data);
   //     });
   // }, []);
+  useEffect(()=>{
+
+  })
   const handleFileChange = (event)=>{
     console.log(event)
     
@@ -42,7 +49,7 @@ function App() {
 
   }
   const handleSubmit = ()=>{
-    
+    setLoading(true)
     const formData = new FormData()
     const formDataset = new FormData()
     console.log(uploadImg)
@@ -62,9 +69,12 @@ function App() {
       .then((res)=>res.json())
       
       .then((data) => {
+        
         console.log('Data successfully submitted:', data);
+        setLoading(false)
         // Handle any additional logic after successful submission
       })
+      
       .catch((error)=>{
         console.error("error submitting data: ", error)
       })
@@ -84,9 +94,9 @@ function App() {
       .then((data) => {
         console.log('Data successfully fetched from /api/result:', data);
         // Assuming the images are returned in the "result" property
-        const images = data.result || [];
+        const images = data.resultArray || [];
         setImages(images); // Assuming you have a state variable "images" in your component
-  
+        
         // If you need to do something else after fetching and setting the images, add it here
       })
       .catch((error) => {
@@ -95,8 +105,6 @@ function App() {
   };
   
 
-  const { loading, pages, totalPages, currentPage, setCurrentPage } =
-    UseDataFetcher();
 
   return (
     <>
@@ -111,18 +119,18 @@ function App() {
           handleResult={handleResult}
         />
         </div>
-        <div>
+      </div>
+      <div>
           <button onClick={handleResult}>Tampilkan  hasil</button>
           </div>
-      </div>
       <div className="font-Poppins section">
         {loading ? (
           <div className="text-center text-5xl">Loading...</div>
         ) : (
           <>
             <div className="grid grid-cols-6">
-              {pages.map((page) => {
-                return <UserProfile key={page.id} {...page} />;
+              {images.map((pair,index) => {
+                return <UserProfile key={index} pair = {pair} />;
               })}
             </div>
             <PaginationButtons
@@ -133,7 +141,8 @@ function App() {
           </>
         )}
       </div>
-      <ImageGallery images = {images}/>
+      
+      
     </>
   );
 }

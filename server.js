@@ -4,12 +4,15 @@ const multer = require("multer");
 const fs = require("fs");
 const {spawn} = require("child_process")
 const cors = require("cors")
+const path = require("path")
 app.use(express.static("./client"));
+app.use(express.static("./uploads"))
+app.use(express.static("uploads/dataset"))
 app.use(cors())
 const uploadClientPath = "./uploads/client_image";
 const uploadDatasetPath = "./uploads/dataset"
 const fsExtra = require("fs-extra");
-const { urlencoded } = require("body-parser");
+
 const emptyDirectory = (directoryPath) => {
   fsExtra.emptyDirSync(directoryPath);
 };
@@ -42,15 +45,16 @@ const clientStorage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-emptyDirectory(uploadClientPath)
+
 let resultData = ""
-let resultArray
+let resultArray 
 const clientUpload = multer({ storage: clientStorage });
 const datasetUpload = multer({storage : datasetStorage})
 
 app.post("/api/submit",clientUpload.array("inputImg") ,(req, res) => {
    resultData = ""
-  let resultArray 
+  
+  
   console.log(`req is ${req}`);
   console.log("hello world!");
   app.post("/api/dataset",datasetUpload.array("inputDataset"),(req,res)=>{
@@ -71,15 +75,15 @@ app.post("/api/submit",clientUpload.array("inputImg") ,(req, res) => {
     }
     
   })
-  app.get("/api/result", (req,res)=>{
-    res.status(200).json({result : resultArray})
-    
-    console.log(resultArray)
-  })
-  res.status(200).json({ "dataset" : resultArray} );
-  res.end()
+  if(resultArray){
+    res.status(200).json({ message: "succesfully"} );
+  }res.end()
 });
-
+app.get("/api/result", (req,res)=>{
+  res.status(200).json({resultArray})
+  
+  console.log(resultArray)
+})
 
 app.listen(5001, () => {
   console.log("Server is running on http://localhost:5001");
