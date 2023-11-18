@@ -10,6 +10,7 @@ import cProfile
 import concurrent.futures
 from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
+import json
 #global variable
 selected_option = sys.argv[1]
 #global function
@@ -145,14 +146,13 @@ def perform_texture_analysis(image_paths,base_path):
 # --- Main ---
 
 if __name__ == "__main__" :
-    start = time.perf_counter()
+    
     if selected_option == "texture":
         script_path_relative = os.path.dirname(os.path.abspath(__file__))
         base_path_query  = os.path.join(script_path_relative,'..','uploads','client_image')
         base_path_query_list = os.listdir(base_path_query)
 
-        profiler = cProfile.Profile()
-        profiler.enable()
+     
         #perform extract query image
         query_features = perform_texture_analysis(base_path_query_list,base_path_query)
         
@@ -167,21 +167,17 @@ if __name__ == "__main__" :
         sorted_result = dict(sorted(result_similarity.items(), key=lambda item: item[1],reverse=True))
         result_list = list(sorted_result.items())
         for i in (result_list):
-            if  i[1]>0.60:
-                print(i)
+            if  i[1]<0.60:
+                result_list.pop(i)
 
-        profiler.disable()
-        profiler.print_stats(sort='cumulative')
-        finish = time.perf_counter()
-        print(f'Finished in {round(finish-start,2)} second(s)')
+        json_list = json.dumps(result_list)
+        print(json_list)
         
     elif selected_option == "color":
         script_path_relative = os.path.dirname(os.path.abspath(__file__))
         base_path_query  = os.path.join(script_path_relative,'..','uploads','client_image')
         base_path_query_list = os.listdir(base_path_query)
 
-        profiler = cProfile.Profile()
-        profiler.enable()
         #perform extract query image
         query_representative_blocks = perform_color_analysis_query(base_path_query_list,base_path_query) 
         #perform extract dataset

@@ -2,12 +2,23 @@ const express = require("express");
 const app = express();
 const multer = require("multer");
 const fs = require("fs");
-
+const {spawn} = require("child_process")
+const cors = require("cors")
 app.use(express.static("./client"));
+app.use(cors())
 const uploadClientPath = "./uploads/client_image";
 const uploadDatasetPath = "./uploads/dataset"
+const fsExtra = require("fs-extra");
+const { urlencoded } = require("body-parser");
+const emptyDirectory = (directoryPath) => {
+  fsExtra.emptyDirSync(directoryPath);
+};
+
 const datasetStorage = multer.diskStorage({
+  
   destination: (req,file,cb) => {
+    
+  emptyDirectory(uploadDatasetPath)
     if(!fs.existsSync(uploadDatasetPath)){
       fs.mkdirSync(uploadDatasetPath,{recursive: true})
     }
@@ -18,6 +29,8 @@ const datasetStorage = multer.diskStorage({
 })
 const clientStorage = multer.diskStorage({
   destination: (req, file, cb) => {
+    emptyDirectory(uploadClientPath)
+  
     // Dapatkan nama subfolder dari timestamp saat ini
     // Cek apakah folder sudah ada atau belum, jika belum, buat folder baru
     if (!fs.existsSync(uploadClientPath)) {
@@ -29,10 +42,15 @@ const clientStorage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-
+emptyDirectory(uploadClientPath)
+let resultData = ""
+let resultArray
 const clientUpload = multer({ storage: clientStorage });
 const datasetUpload = multer({storage : datasetStorage})
+
 app.post("/api/submit",clientUpload.array("inputImg") ,(req, res) => {
+   resultData = ""
+  let resultArray 
   console.log(`req is ${req}`);
   console.log("hello world!");
   app.post("/api/dataset",datasetUpload.array("inputDataset"),(req,res)=>{
@@ -42,9 +60,24 @@ app.post("/api/submit",clientUpload.array("inputImg") ,(req, res) => {
   const toggleValue = req.body["toggleStatus"]
   console.log(`toggle value: ${toggleValue}`);
   
-
-
-  res.status(200).json({ message: "Files uploaded successfully!" });
+  const pythonProcess = spawn("python3",["CBIR/CBIR.py",toggleValue])
+  pythonProcess.stdout.on("data",(data)=>{
+    resultData+= data.toString()
+  })
+  pythonProcess.on("close",(code)=>{
+    console.log(resultData)
+    if(code ===0){
+      resultArray = JSON.parse(resultData)
+    }
+    
+  })
+  app.get("/api/result", (req,res)=>{
+    res.status(200).json({result : resultArray})
+    
+    console.log(resultArray)
+  })
+  res.status(200).json({ "dataset" : resultArray} );
+  res.end()
 });
 
 
