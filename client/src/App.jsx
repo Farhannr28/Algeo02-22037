@@ -12,6 +12,7 @@ import Navbar from "./components/Navbar";
 import PaginationButtons from "./components/PaginationButtons";
 
 function App() {
+  const [images, setImages] = useState([]);
   const [uploadImg, setUploadImg] = useState(null)
   const [dataSet,setUploadDataSet] = useState([])
   const [toggle,setToggle] = useState("color")
@@ -58,10 +59,14 @@ function App() {
       method: 'POST',
       body: formData,
     })
-      .then((res)=>console.log(res))
+      .then((res)=>res.json())
+      
       .then((data) => {
         console.log('Data successfully submitted:', data);
         // Handle any additional logic after successful submission
+      })
+      .catch((error)=>{
+        console.error("error submitting data: ", error)
       })
     fetch ('/api/dataset',{
       method : 'POST',
@@ -71,6 +76,23 @@ function App() {
         console.log("data succesfully submitted: ", data)
       } )
   }
+  const handleResult = () => {
+    fetch('/api/result', {
+      method: 'GET',
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('Data successfully fetched from /api/result:', data);
+        // Assuming the images are returned in the "result" property
+        const images = data.result || [];
+        setImages(images); // Assuming you have a state variable "images" in your component
+  
+        // If you need to do something else after fetching and setting the images, add it here
+      })
+      .catch((error) => {
+        console.error('Error fetching data from /api/result:', error);
+      });
+  };
   
 
   const { loading, pages, totalPages, currentPage, setCurrentPage } =
@@ -86,8 +108,12 @@ function App() {
           handleToggle={handleToggle}
           handleDatasetChange={handleDatasetChange}
           handleSubmit={handleSubmit}
+          handleResult={handleResult}
         />
         </div>
+        <div>
+          <button onClick={handleResult}>Tampilkan  hasil</button>
+          </div>
       </div>
       <div className="font-Poppins section">
         {loading ? (
@@ -107,7 +133,7 @@ function App() {
           </>
         )}
       </div>
-      <ImageGallery />
+      <ImageGallery images = {images}/>
     </>
   );
 }
