@@ -1,6 +1,7 @@
 import React,{useState} from 'react';
 import {NavLink} from 'react-router-dom';
 import {FiAlignRight,FiXCircle } from "react-icons/fi";
+import "./../style/style.css"
 
 
 function Navbar() {
@@ -23,8 +24,11 @@ function Navbar() {
                     </NavLink>
                 </div>
                 <div className="col-start-2 col-span-4">
-                    <span className="text-[40px] text-[#F3EEEA] py-12">
-                    <a href = "/">Reverse Image Search</a>
+                    <span className="text-[40px] judul text-[#F3EEEA] py-12">
+                        <NavLink exact activeClassName='is-active' to="/">
+                            Reverse Image Search
+                        </NavLink>
+                  
                     </span>
                 </div>
                 <div className="my-auto col-start-9 text-xl col-span-4">

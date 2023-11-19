@@ -7,7 +7,7 @@ const cors = require("cors")
 const path = require("path")
 app.use(express.static("./client"));
 app.use(express.static("./uploads"))
-app.use(express.static("uploads/dataset"))
+app.use(express.static("/uploads/dataset"))
 app.use(cors())
 const uploadClientPath = "./uploads/client_image";
 const uploadDatasetPath = "./uploads/dataset"

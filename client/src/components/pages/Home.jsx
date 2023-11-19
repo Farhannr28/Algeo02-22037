@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AsideButton from "./../AsideButton";
-// import Searchbutton from "./components/Searchbutton";
-// import Toggle from "./components/Toggle";
-// import UploadImg from "./components/UploadImg";
-// import UploadDataSet from "./components/UploadDataSet";
-// import UseDataFetcher from "./components/UseDataFetcher";
+import Input from "../AsideButton";
 import UserProfile from "./../UserProfile";
 import PaginationButtons from "./../PaginationButtons";
 
@@ -67,9 +62,9 @@ const Home = () => {
         .then((res)=>res.json())
         
         .then((data) => {
-          
-          console.log('Data successfully submitted:', data);
           setLoading(false)
+          console.log('Data successfully submitted:', data);
+          
           // Handle any additional logic after successful submission
         })
         
@@ -82,6 +77,7 @@ const Home = () => {
       })
         .then((data)=>{
           console.log("data succesfully submitted: ", data)
+          setLoading(false)
         } )
     }
     const handleResult = () => {
@@ -105,20 +101,16 @@ const Home = () => {
     return (
 
     <>
-    <div className="flex flex-row mx-10 h-[50] ">
-    <div className="basis-1/3 flex justify-center items-center">
-    <AsideButton
+    <div className="">
+      <Input
       handleFileChange={handleFileChange}
       handleToggle={handleToggle}
       handleDatasetChange={handleDatasetChange}
       handleSubmit={handleSubmit}
       handleResult={handleResult}
-    />
-    </div>
+      />
+
   </div>
-  <div>
-      <button onClick={handleResult}>Tampilkan  hasil</button>
-      </div>
   <div className="font-Poppins section">
     {loading ? (
       <div className="text-center text-5xl">Loading...</div>
