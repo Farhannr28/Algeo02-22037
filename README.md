@@ -34,7 +34,7 @@ List the ready features here:
 
 ## Screenshots
 
-![image](uploads\readme\readme.jpg)
+![image](readme.jpg)
 
 ## Usage
 
