@@ -114,12 +114,12 @@ const Home = () => {
       />
 
   </div>
-  <div className="font-Poppins section">
+  <div className="font-Poppins section my-20">
     {loading ? (
       <div className="text-center text-5xl">Loading...</div>
     ) : (
       <>
-        <div className="">time : {(time/1000).toFixed(2)}</div>
+        <div className="my-10 mx-auto w-[200px] bg-white rounded-md text-center">time : {(time/1000).toFixed(2)}</div>
         <div className="grid grid-cols-6">
           {currentShownPage.map((pair,index) => {
             return <UserProfile key={index} pair = {pair} />;
