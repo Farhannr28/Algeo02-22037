@@ -12,11 +12,12 @@ const About = () => {
         <div className='grid grid-cols-12'>
             <h1 className='col-start-6 col-span-3 my-7 text-4xl'>We are nama kelompok</h1>
             <ul className=' text-2xl col-start-5 col-span-6'>
-                <li>13522120 <span className='ml-[300px]'> Farhan Nafis Rayhan</span></li>
-                <li>13522120 <span className='ml-[300px]'> Emery Fathan Zwagery</span></li>
+                <li>13522037 <span className='ml-[300px]'> Farhan Nafis Rayhan</span></li>
+                <li>13522079 <span className='ml-[300px]'> Emery Fathan Zwageri</span></li>
                 <li>13522120 <span className='ml-[300px]'> Muhamad Rifki Virziadeili Harisman</span></li>
             </ul>
         </div>
+        {/* <footer className='my-[100px] text-3xl flex justify-center'><b>calon software engineer google</b></footer> */}
        
     </div>
   );

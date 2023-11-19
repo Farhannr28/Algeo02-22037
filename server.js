@@ -53,8 +53,6 @@ const datasetUpload = multer({storage : datasetStorage})
 
 app.post("/api/submit",clientUpload.array("inputImg") ,(req, res) => {
    resultData = ""
-  
-  
   console.log(`req is ${req}`);
   console.log("hello world!");
   app.post("/api/dataset",datasetUpload.array("inputDataset"),(req,res)=>{
@@ -73,7 +71,6 @@ app.post("/api/submit",clientUpload.array("inputImg") ,(req, res) => {
     if(code ===0){
       resultArray = JSON.parse(resultData)
     }
-    
   })
   if(resultArray){
     res.status(200).json({ message: "succesfully"} );

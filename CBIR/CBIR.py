@@ -24,12 +24,13 @@ def cosine_similarity(a,b):
 def search_similarities(database_features, database_path, query_vector, result_dict):
     try:
         dataset_vector = np.array(database_features[database_path])
-        res_value = cosine_similarity(query_vector, dataset_vector)
+        res_value = texture.cosinee_similarity(query_vector,dataset_vector)
     except Exception as e:
         print(f"Error processing {database_path}: {e}")
         res_value = None
     
     result_dict[database_path] = res_value
+    result_dict[database_path] = "{:.4f}".format(result_dict[database_path])
 
 def perform_similarity_analysis(database_features, query_feature):
     result_dict = {}
@@ -88,7 +89,8 @@ def perform_color_analysis_database(image_paths, base_path, query):
             repVal.resize(5625,3)
             result = np.where(repVal.any(axis = 1), cosine_similarity(repVal, query), 0)
             similarity = np.sum(result)
-            resultDict[image_path] = similarity
+            resultDict[image_path] = similarity/5625
+            resultDict[image_path] = "{:.2f}".format(resultDict[image_path])
             # picend = time.perf_counter()
             # print(f"picture {image_path} done in {picend - picstart}\n")
     except Exception as e:
@@ -149,27 +151,24 @@ if __name__ == "__main__" :
     
     if selected_option == "texture":
         script_path_relative = os.path.dirname(os.path.abspath(__file__))
-        base_path_query  = os.path.join(script_path_relative,'..','uploads','client_image')
-        base_path_query_list = os.listdir(base_path_query)
+        # base_path_query  = os.path.join(script_path_relative,'..','uploads','client_image')
+        base_path_query_list = os.listdir("E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\client_image")
 
      
         #perform extract query image
-        query_features = perform_texture_analysis(base_path_query_list,base_path_query)
+        query_features = perform_texture_analysis(base_path_query_list,"E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\client_image")
         
         #perform extract dataset
-        base_path_database = os.path.join(script_path_relative,'..','uploads','dataset')
-        database_path  = os.listdir(base_path_database)
-        database_features = perform_texture_analysis(database_path,base_path_database)   
+        # base_path_database = os.path.join(script_path_relative,'..','uploads','dataset')
+        database_path  = os.listdir("E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\dataset")
+        database_features = perform_texture_analysis(database_path,"E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\dataset")   
 
         #perform search similarity
         
         result_similarity = perform_similarity_analysis(database_features,query_features)
         sorted_result = dict(sorted(result_similarity.items(), key=lambda item: item[1],reverse=True))
         result_list = list(sorted_result.items())
-        for i in (result_list):
-            if  i[1]<0.60:
-                result_list.pop(i)
-
+        result_list = [i for i in result_list if float(i[1])>=0.60]
         json_list = json.dumps(result_list)
         print(json_list)
         
@@ -187,9 +186,7 @@ if __name__ == "__main__" :
         sorted_result = dict(sorted(database_result.items(), key=lambda item: item[1], reverse=True))
         result_list = list(sorted_result.items())
         temp = 0
-        for i in (result_list):
-            if  i[1]<3375: #60%
-                result_list.pop(i)
+        result_list =  [i for i in result_list if float(i[1])>=0.60]
 
         json_list = json.dumps(result_list)
         print(json_list)
