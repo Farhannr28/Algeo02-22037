@@ -1,6 +1,17 @@
 /* styles.css */
 @import url("https://fonts.googleapis.com/css2?family=Agbalumo&display=swap");
 
+body {
+  /* background-image: url("assets/bg.jpg"); */
+  background-color: #4f4a45;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  height: 100%;
+  font-family: Georgia;
+}
+
 .navbar {
   font-family: Agbalumo;
 }
@@ -88,3 +99,4 @@
 .toggleSwitch input:checked ~ .text::before {
   opacity: 1;
 }
+
