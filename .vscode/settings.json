@@ -1,0 +1,14 @@
+{
+    {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier",
+        "[javascript]": {
+          "editor.formatOnSave": false
+        },
+        "[javascriptreact]": {
+          "editor.formatOnSave": false
+        },
+        "prettier.requireConfig": true
+      }
+      
+}

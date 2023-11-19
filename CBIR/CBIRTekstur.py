@@ -1,6 +1,7 @@
 from math import *
 import numpy as np
 from PIL import Image
+from numpy.linalg import norm
 def convertToGrayscale(rgb_image):
     # Convert the RGB image to a NumPy array for efficient operations
     rgb_array = np.array(rgb_image)
@@ -116,3 +117,5 @@ def energy(matrixNorm):
 #     return sum
     
 #mencari tingkat kemiripan dengan cosine similarity
+def cosinee_similarity(a,b):
+    return np.dot(a,b)/(norm(a)*norm(b))

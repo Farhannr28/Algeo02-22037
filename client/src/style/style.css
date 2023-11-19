@@ -1,7 +1,18 @@
 /* styles.css */
 @import url("https://fonts.googleapis.com/css2?family=Agbalumo&display=swap");
 
-.navbar {
+body {
+  /* background-image: url("assets/bg.jpg"); */
+  background-color: #4f4a45;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  height: 100%;
+  font-family: Georgia;
+}
+
+.judul {
   font-family: Agbalumo;
 }
 
@@ -87,4 +98,36 @@
 
 .toggleSwitch input:checked ~ .text::before {
   opacity: 1;
+}
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px dashed #1475cf;
+  height: 500px;
+  width: 500px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.uploaded-row {
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-radius: 5px;
+  background-color: #e9f0ff;
+}
+
+.upload-content {
+  display: flex;
+  align-items: center;
+}
+
+.input-field {
+  display: none;
 }

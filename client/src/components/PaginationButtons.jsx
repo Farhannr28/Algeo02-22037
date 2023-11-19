@@ -44,7 +44,7 @@ const PaginationButtons = ({ setCurrentPage, currentPage, totalPages }) => {
         previousLabel={
           showPrevButton ? (
             <span className="w-10 h-10 flex items-center justify-center bg-lightGray rounded-md mr-4">
-              <BsChevronLeft />
+              <BsChevronLeft/>
             </span>
           ) : null
         }

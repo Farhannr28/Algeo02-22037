@@ -9,10 +9,6 @@ const UseDataFetcher = () => {
   useEffect(() => {
     const fetchData = async () => {
       const page = Math.min(currentPage + 1, totalPages);
-      
-    
-      
-      
     };
     fetchData();
   }, [currentPage]);

@@ -17,24 +17,26 @@ function UploadDataSet({ onDatasetChange }) {
   }, [selectedFiles]);
 
   return (
-    <div className="my-3 border-[#776b5d] bg-[#ebe3d5] text-[#776b5d] flex justify-center border-4 rounded-[8rem]">
-      <label className="upload text-[25px]">
-        <input
-          type="file"
-          id="input-dataset"
-          webkitdirectory="true"
-          multiple
-          onChange={handleDatasetChange}
-        />
-        <RiFolderImageLine />
-      </label>
+    <div>
+      <div className="my-3 w-[100px] h-[40px] border-[#776b5d] bg-[#ebe3d5] text-[#776b5d] flex justify-center items-center border-4 rounded-[8rem]">
+        <label className="upload text-[25px] col-start-2">
+          <input
+            type="file"
+            id="input-dataset"
+            webkitdirectory="true"
+            multiple
+            onChange={handleDatasetChange}
+            />
+          <RiFolderImageLine />
+        </label>
+      </div>
 
       {selectedFiles.length > 0 && (
-        <div className="mt-2">
-          <p>Selected Folders:</p>
-          <ul>
+        <div className="col-start-3 col-span-3 flex">
+          Selected Folders:
+          <ul >
           {uniqueFolderNames.map((folderName, index) => (
-              <li key={index}>{folderName}</li>
+            <li className="inline ml-2" key={index}>{folderName}</li>
             ))}
           </ul>
         </div>
