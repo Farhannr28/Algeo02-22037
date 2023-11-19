@@ -13,6 +13,8 @@ const Home = () => {
     const [isFinish,setIsFinish] = useState(false)
     const totalPages =Math.round( images.length/12)
     const [currentPage,setCurrentPage] = useState(0)
+    const [time,setTime] = useState(0)
+    const currentShownPage = images.slice(currentPage*12, (currentPage+1)*12)
     // useEffect(() => {
     //   fetch("/api")
     //     .then((response) => response.json())
@@ -41,8 +43,9 @@ const Home = () => {
       console.log(toggle)
   
     }
-    const handleSubmit = ()=>{
+    const handleSubmit = async ()=>{
       setLoading(true)
+      setTime(Date.now())
       const formData = new FormData()
       const formDataset = new FormData()
       console.log(uploadImg)
@@ -55,14 +58,13 @@ const Home = () => {
       }
       console.log(toggle)
       formData.append("toggleStatus",toggle)
-      fetch('/api/submit', {
+      await fetch('/api/submit', {
         method: 'POST',
         body: formData,
       })
         .then((res)=>res.json())
         
         .then((data) => {
-          setLoading(false)
           console.log('Data successfully submitted:', data);
           
           // Handle any additional logic after successful submission
@@ -71,13 +73,13 @@ const Home = () => {
         .catch((error)=>{
           console.error("error submitting data: ", error)
         })
-      fetch ('/api/dataset',{
+      await fetch ('/api/dataset',{
         method : 'POST',
         body: formDataset
       })
         .then((data)=>{
           console.log("data succesfully submitted: ", data)
-          setLoading(false)
+          
         } )
     }
     const handleResult = () => {
@@ -90,7 +92,8 @@ const Home = () => {
           // Assuming the images are returned in the "result" property
           const images = data.resultArray || [];
           setImages(images); // Assuming you have a state variable "images" in your component
-          
+          setLoading(false)
+          setTime(Date.now() - time);
           // If you need to do something else after fetching and setting the images, add it here
         })
         .catch((error) => {
@@ -116,8 +119,9 @@ const Home = () => {
       <div className="text-center text-5xl">Loading...</div>
     ) : (
       <>
+        <div className="">time : {(time/1000).toFixed(2)}</div>
         <div className="grid grid-cols-6">
-          {images.map((pair,index) => {
+          {currentShownPage.map((pair,index) => {
             return <UserProfile key={index} pair = {pair} />;
           })}
         </div>

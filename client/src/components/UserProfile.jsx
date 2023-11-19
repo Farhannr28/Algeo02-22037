@@ -6,7 +6,7 @@ const UserProfile = ({ pair }) => {
   return (
     <div className="flex flex-col items-center gap-4 bg-lightGray rounded-lg p-4">
       <img
-        src={"http:\\"+imagePath}
+        src={imagePath}
         alt=""
         className="w-[200px] h-[200px] border-2 border-solid border-purple rounded-lg object-cover"
       />

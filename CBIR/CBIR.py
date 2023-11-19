@@ -28,7 +28,10 @@ def search_similarities(database_features, database_path, query_vector, result_d
     except Exception as e:
         print(f"Error processing {database_path}: {e}")
         res_value = None
-    
+    base_url = "http://localhost:5001"
+    fixed_path = database_path.replace("\\","/")
+    realtive_path = fixed_path.split("/uploads/dataset/")[1]
+    database_path = f"{base_url}/uploads/dataset/{realtive_path}"
     result_dict[database_path] = res_value
     result_dict[database_path] = "{:.4f}".format(result_dict[database_path])
 
@@ -89,6 +92,10 @@ def perform_color_analysis_database(image_paths, base_path, query):
             repVal.resize(5625,3)
             result = np.where(repVal.any(axis = 1), cosine_similarity(repVal, query), 0)
             similarity = np.sum(result)
+            base_url = "http://localhost:5001"
+            fixed_path = image_path.replace("\\","/")
+            realtive_path = fixed_path.split("/uploads/dataset/")[1]
+            image_path = f"{base_url}/uploads/dataset/{realtive_path}"
             resultDict[image_path] = similarity/5625
             resultDict[image_path] = "{:.2f}".format(resultDict[image_path])
             # picend = time.perf_counter()
@@ -152,16 +159,16 @@ if __name__ == "__main__" :
     if selected_option == "texture":
         script_path_relative = os.path.dirname(os.path.abspath(__file__))
         # base_path_query  = os.path.join(script_path_relative,'..','uploads','client_image')
-        base_path_query_list = os.listdir("E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\client_image")
+        base_path_query_list = os.listdir("E:/Tubes-Algeo2/Algeo02-22037/uploads/client_image")
 
      
         #perform extract query image
-        query_features = perform_texture_analysis(base_path_query_list,"E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\client_image")
+        query_features = perform_texture_analysis(base_path_query_list,"E:/Tubes-Algeo2/Algeo02-22037/uploads/client_image")
         
         #perform extract dataset
         # base_path_database = os.path.join(script_path_relative,'..','uploads','dataset')
-        database_path  = os.listdir("E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\dataset")
-        database_features = perform_texture_analysis(database_path,"E:\\Tubes-Algeo2\\Algeo02-22037\\uploads\\dataset")   
+        database_path  = os.listdir("E:/Tubes-Algeo2/Algeo02-22037/uploads/dataset")
+        database_features = perform_texture_analysis(database_path,"E:/Tubes-Algeo2/Algeo02-22037/uploads/dataset")   
 
         #perform search similarity
         
